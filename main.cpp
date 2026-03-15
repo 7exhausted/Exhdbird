@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace sf;
 struct Path {
-    std::string icon = "image/";
+    std::string back = "image/back.jpg";
 
 
 
@@ -12,9 +12,16 @@ struct Path {
 
 
 int main()
-{
+{   
+    //Window
 	RenderWindow win(VideoMode(1280, 720), "FlupyBird");
+    Path path;
     
+    //Background
+    Texture texture_back;
+    if (!texture_back.loadFromFile(path.back)) return -1;
+    RectangleShape background(Vector2f(1280, 720));
+    background.setTexture(&texture_back);
 
 
 
@@ -30,7 +37,7 @@ int main()
 
 
 
- 
+        win.draw(background);
         win.display();
 
     }
