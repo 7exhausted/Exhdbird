@@ -22,13 +22,13 @@ public:
 	void fly();
 	void update(float time);
 	void draw(RenderWindow& win);
-	
+	FloatRect getBounds() const;
 
 	// Сеттеры
 	void setPosition(float x, float y);
 
 	//Гетеры 
-	void getPosition();
+	Vector2f getPosition();
 
 
 };

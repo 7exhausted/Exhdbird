@@ -1,7 +1,7 @@
 #include "bird.h"
 #include <iostream>
 
-Bird::Bird(std::string path) : speed(0.f), gravity(2.f), jump(-1.5f), ms(0.5f)
+Bird::Bird(std::string path) : speed(0.f), gravity(2.f), jump(-1.0f), ms(0.5f)
 {
 	if (!texture.loadFromFile(path)) std::cout << "Eror load from file" << std::endl;
     sprite.setTexture(texture);
@@ -41,9 +41,13 @@ void Bird::setPosition(float x, float y)
     sprite.setPosition(x, y);
 }
 
-void Bird::getPosition()
+Vector2f Bird::getPosition()
 {
-    sprite.getPosition();
+    return sprite.getPosition();
+}
+
+sf::FloatRect Bird::getBounds() const {
+    return sprite.getGlobalBounds();
 }
 
 
