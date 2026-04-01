@@ -1,20 +1,16 @@
 #include "Pipe.h"
-#include <iostream>
 
-Pipe::Pipe(float startX, float gapY, float pipeSpeed, const std::string& texturePath)
-    : speed(pipeSpeed), gapSize(280.f), counted(false)
+Pipe::Pipe(float startX, float gapY, float pipeSpeed, const sf::Texture& sharedTexture)
+    : texture(&sharedTexture), speed(pipeSpeed), gapSize(280.f), counted(false)
 {
-    if (!texture.loadFromFile(texturePath)) {
-        std::cout << "Ошибка загрузки текстуры трубы!" << std::endl;
-    }
+    topPipe.setTexture(*texture);
+    bottomPipe.setTexture(*texture);
 
-    topPipe.setTexture(texture);
-    bottomPipe.setTexture(texture);
+    topPipe.setTextureRect(sf::IntRect(127, 17, 107, 658));
+    bottomPipe.setTextureRect(sf::IntRect(127, 17, 107, 658));
 
-    // Переворачиваем верхнюю трубу
     topPipe.setScale(1.f, -1.f);
 
-    // Устанавливаем позиции
     topPipe.setPosition(startX, gapY - gapSize / 2);
     bottomPipe.setPosition(startX, gapY + gapSize / 2);
 }
@@ -46,16 +42,12 @@ bool Pipe::checkPassed(float birdX) {
     return false;
 }
 
-void Pipe::reset(float startX, float gapY) {
-    counted = false;
-    topPipe.setPosition(startX, gapY - gapSize / 2);
-    bottomPipe.setPosition(startX, gapY + gapSize / 2);
-}
-
 float Pipe::getX() const {
     return topPipe.getPosition().x;
 }
 
-float Pipe::getGapY() const {
-    return topPipe.getPosition().y + gapSize / 2;
+void Pipe::reset(float startX, float gapY) {
+    counted = false;
+    topPipe.setPosition(startX, gapY - gapSize / 2);
+    bottomPipe.setPosition(startX, gapY + gapSize / 2);
 }
